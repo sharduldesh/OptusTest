@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="data"
+            type="com.techm.optuspoc.model.ModelPhotosResponse" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        style="@style/MatchParentStyle"
+        android:padding="@dimen/padding_size_10">
+
+       <!-- <View
+            android:id="@+id/equipmentDivider"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_1"
+            android:background="@color/darkGrey"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />-->
+
+        <androidx.cardview.widget.CardView
+            style="@style/MatchWrapParentStyle"
+            android:padding="@dimen/card_view_margin"
+            app:cardBackgroundColor="@color/colorBlue"
+            app:cardCornerRadius="@dimen/cardview_radius"
+            app:cardElevation="@dimen/cardview_radius"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/padding_size_16">
+
+                <TextView
+                    android:id="@+id/imageTitle"
+                    android:layout_width="@dimen/no_dp"
+                    android:layout_height="wrap_content"
+                    style="@style/WrapContentStyle.TextStyle"
+                    android:text="@{data.title!=null?data.title:`No Title`}"
+
+                    app:layout_constraintBottom_toBottomOf="@id/listImage"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/listImage"
+                    app:layout_constraintTop_toTopOf="@id/listImage" />
+
+                <ImageView
+                    android:id="@+id/listImage"
+                    android:layout_width="@dimen/image_width"
+                    android:layout_height="@dimen/image_height"
+                    android:scaleType="fitCenter"
+                    tools:background="@mipmap/ic_launcher"
+                    app:layout_constraintStart_toEndOf="@id/imageTitle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>
