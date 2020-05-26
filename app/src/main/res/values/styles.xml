@@ -1,37 +1,9 @@
 <resources>
 
+    <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-
-    <style name="WrapContentStyle">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-
-    <style name="MatchParentStyle">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-    </style>
-
-    <style name="MatchWrapParentStyle">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-
-    <style name="WrapContentStyle.TextStyle">
-        <item name="android:textColor">@color/textColor</item>
-        <item name="android:textSize">@dimen/text_size</item>
-
-    </style>
-
-    <style name="ImageStyle">
-        <item name="android:layout_width">@dimen/image_width</item>
-        <item name="android:layout_height">@dimen/image_height</item>
-        <item name="android:layout_marginStart">@dimen/item_constraint_margin</item>
-        <item name="android:layout_marginLeft">@dimen/item_constraint_margin</item>
-    </style>
-
 </resources>

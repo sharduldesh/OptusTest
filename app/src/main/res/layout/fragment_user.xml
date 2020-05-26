@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -9,20 +10,31 @@
         android:layout_height="match_parent">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/albumToolbar"
-            android:layout_width="match_parent"
+            android:id="@+id/mToolbarUser"
+            android:layout_width="@dimen/margin_0"
             android:layout_height="?attr/actionBarSize"
-
+            android:contentInsetLeft="@dimen/margin_0"
+            android:contentInsetStart="@dimen/margin_0"
+            app:contentInsetLeft="@dimen/margin_0"
+            app:contentInsetStart="@dimen/margin_0"
+            android:contentInsetRight="@dimen/margin_0"
+            android:contentInsetEnd="@dimen/margin_0"
+            app:contentInsetRight="@dimen/margin_0"
+            app:contentInsetEnd="@dimen/margin_0"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent" >
 
             <TextView
-                android:id="@+id/albumTitle"
+                android:id="@+id/mToolbarUserTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:textSize="@dimen/text_size_16" />
+                android:textSize="@dimen/text_size_20"
+                app:layout_constraintBottom_toBottomOf="@+id/mToolbarUser"
+                app:layout_constraintTop_toTopOf="@+id/mToolbarUser"
+                app:layout_constraintEnd_toEndOf="@+id/mToolbarUser"
+                app:layout_constraintStart_toStartOf="@+id/mToolbarUser"/>
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -31,24 +43,25 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/margin_1"
             android:background="@color/colorGrey"
-            app:layout_constraintTop_toBottomOf="@+id/albumToolbar" />
+            app:layout_constraintTop_toBottomOf="@+id/mToolbarUser"/>
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/albumRecyclerView"
+            android:id="@+id/recyclerViewUser"
             android:layout_width="@dimen/margin_0"
             android:layout_height="@dimen/margin_0"
+            android:clipToPadding="false"
             android:scrollbars="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view"
-            tools:context=".ui.album.FragmentAlbum"
-            tools:listitem="@layout/item_album" />
+            tools:context="org.techm.optus.ui.view.user.FragmentUser"
+            tools:listitem="@layout/item_user" />
 
         <ProgressBar
-            android:id="@+id/albumProgressBar"
+            android:id="@+id/progressBarUser"
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -60,14 +73,3 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
-
-    <!--
-
-        android:contentInsetLeft="@dimen/margin_0"
-        android:contentInsetStart="@dimen/margin_0"
-        app:contentInsetLeft="@dimen/margin_0"
-        app:contentInsetStart="@dimen/margin_0"
-        android:contentInsetRight="@dimen/margin_0"
-        android:contentInsetEnd="@dimen/margin_0"
-        app:contentInsetRight="@dimen/margin_0"
-        app:contentInsetEnd="@dimen/margin_0"-->
