@@ -1,5 +1,6 @@
 package com.techm.optustest.data.model
 
+/**Data class for Userinfo **/
 data class UserInfoResponseModel (
     val address: AddressModel,
     val company: CompanyModel,

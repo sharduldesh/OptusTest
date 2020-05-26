@@ -1,9 +1,9 @@
 package com.techm.optustest.data.network
 
+/**class for calling API**/
+class APIServiceImpl: APIInterface {
 
-class APIServiceImpl: APIService {
+    override suspend fun getUsers() = RetrofitBuilder.apiService.getUsers()
 
-    override suspend fun getUsers() = APIBuilder.apiService.getUsers()
-
-    override suspend fun getAlbums(id: Int) = APIBuilder.apiService.getAlbums(id)
+    override suspend fun getAlbums(id: Int) = RetrofitBuilder.apiService.getAlbums(id)
 }

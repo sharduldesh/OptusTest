@@ -1,9 +1,9 @@
 package com.techm.optustest.data.repository
 
-import com.techm.optustest.data.network.APIService
+import com.techm.optustest.data.network.APIInterface
 
-
-class AlbumRepository(private val apiService: APIService) {
+/**repository class for calling API **/
+class AlbumRepository(private val apiService: APIInterface) {
 
     suspend fun getAlbumApi(_id: Int) = apiService.getAlbums(_id)
 }
