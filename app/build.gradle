@@ -1,14 +1,16 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
 
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
     defaultConfig {
-        applicationId "com.example.optustest"
-        minSdkVersion 22
+        applicationId "com.techm.optustest"
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -16,15 +18,19 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    dataBinding {
-        enabled = true
-    }
-
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    dataBinding {
+        enabled = true
+    }
+
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
     }
 
 }
@@ -35,7 +41,44 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    /** Unit test dependencies **/
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    testImplementation 'androidx.arch.core:core-testing:2.1.0'
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.4'
+    implementation "androidx.fragment:fragment-ktx:$rootProject.fragment_version"
+    debugImplementation "androidx.fragment:fragment-testing:$rootProject.fragment_version"
+    androidTestImplementation 'androidx.test:rules:1.2.0'
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$rootProject.espresso_version"
+    testImplementation "org.mockito:mockito-core:$rootProject.mockito_version"
+
+    /** layout dependency**/
+    implementation "androidx.recyclerview:recyclerview:$rootProject.recycler_view"
+    implementation "androidx.cardview:cardview:$rootProject.card_view"
+
+    /** network API dependency **/
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.gson_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.loggin_interceptor"
+
+    /** coroutine dependency **/
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutine_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.coroutine_version"
+
+
+    /** live data and ViewModel dependency **/
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$rootProject.lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.lifecycle_version"
+
+    /** Fragment Navigation dependency **/
+    implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.navigation_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$rootProject.navigation_version"
+
+    /** image loading dependency **/
+    implementation "com.squareup.picasso:picasso:$rootProject.picasso_version"
+
 }
