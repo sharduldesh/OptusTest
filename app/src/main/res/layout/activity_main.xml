@@ -19,9 +19,3 @@
         app:navGraph="@navigation/nav_graph" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    <!-- android:layout_marginStart="@dimen/margin_1"
-       android:layout_marginTop="@dimen/margin_1"
-       android:layout_marginEnd="@dimen/margin_1"
-       android:layout_marginBottom="@dimen/margin_1"-->

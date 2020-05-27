@@ -60,14 +60,3 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
-
-    <!--
-
-        android:contentInsetLeft="@dimen/margin_0"
-        android:contentInsetStart="@dimen/margin_0"
-        app:contentInsetLeft="@dimen/margin_0"
-        app:contentInsetStart="@dimen/margin_0"
-        android:contentInsetRight="@dimen/margin_0"
-        android:contentInsetEnd="@dimen/margin_0"
-        app:contentInsetRight="@dimen/margin_0"
-        app:contentInsetEnd="@dimen/margin_0"-->
