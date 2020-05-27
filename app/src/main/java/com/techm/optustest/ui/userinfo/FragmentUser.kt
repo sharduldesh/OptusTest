@@ -55,14 +55,14 @@ class FragmentUser : Fragment(), UserAdapter.OnItemClickListener {
                 .get(UserViewModel::class.java)
 
         if (activity?.isConnection()!!) {
-            apiCall()
+            callUserInfoApi()
         } else {
             binding.recyclerViewUser.showSnackBar(NO_INTERNET_CONNECTION)
         }
     }
 
     /**observe user list fetched from server and  bind  recycler view to livedata**/
-    private fun apiCall() {
+    private fun callUserInfoApi() {
         userViewModel.getUserList().observe(viewLifecycleOwner, Observer {
             it.let { result ->
                 when (result.status) {

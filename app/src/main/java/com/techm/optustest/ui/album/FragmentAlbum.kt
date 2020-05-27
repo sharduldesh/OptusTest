@@ -61,7 +61,7 @@ class FragmentAlbum : Fragment(), AlbumAdapter.OnImageClickListener {
             ViewModelProviders.of(this@FragmentAlbum, albumFactory).get(AlbumViewModel::class.java)
 
         if (activity?.isConnection()!!) {
-            apiCall()
+            callAlbumApi()
         } else {
             binding.albumRecyclerView.showSnackBar(NO_INTERNET_CONNECTION)
         }
@@ -69,7 +69,7 @@ class FragmentAlbum : Fragment(), AlbumAdapter.OnImageClickListener {
     }
 
     /**observe user list fetched from server and  bind  recycler view to livedata**/
-    private fun apiCall() {
+    private fun callAlbumApi() {
 
         albumViewModel.getAlbumList(userID).observe(viewLifecycleOwner, Observer {
             it.let { result ->
