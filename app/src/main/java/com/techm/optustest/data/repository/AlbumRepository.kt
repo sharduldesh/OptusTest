@@ -1,9 +1,10 @@
 package com.techm.optustest.data.repository
 
-import com.techm.optustest.data.network.APIInterface
+import com.techm.optustest.data.model.AlbumResponseModel
 
-/**repository class for calling API **/
-class AlbumRepository(private val apiService: APIInterface) {
-
-    suspend fun getAlbumApi(_id: Int) = apiService.getAlbums(_id)
+/**
+ * interface for  album repository
+ */
+interface AlbumRepository {
+  suspend fun getAlbumApi(id: Int) : List<AlbumResponseModel>
 }

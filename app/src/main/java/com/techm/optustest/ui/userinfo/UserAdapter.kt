@@ -1,5 +1,6 @@
 package com.techm.optustest.ui.userinfo
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -10,7 +11,8 @@ import com.techm.optustest.data.model.UserInfoResponseModel
 /**adapter class for showing item in user fragment**/
 class UserAdapter(
     private var userList: List<UserInfoResponseModel>,
-    private var listener: OnItemClickListener
+    private var listener: OnItemClickListener,
+    private var context: Context
 ) : RecyclerView.Adapter<UserViewHolder>() {
 
     /**image click interface**/

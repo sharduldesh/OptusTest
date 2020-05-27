@@ -16,14 +16,14 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-/**UI test cases for photo fragment fragment**/
-class FragmentPhotoTest {
+
+class FragmentAlbumDetailsTest {
 
     @get: Rule
     val activityRule: ActivityTestRule<MainActivity> =
         ActivityTestRule(MainActivity::class.java, false, false)
 
-    private val listItemPosition = 2
+    private val listItemPosition = 5
 
     @Before
     fun setUp() {
@@ -31,17 +31,22 @@ class FragmentPhotoTest {
         activityRule.launchActivity(intent)
     }
 
-
-    /**test photo frag,ent displayed**/
     @Test
-    fun photoFragmentDisplaySuccess() {
+    fun testAlbumFragmentDetailsIsDisplayed() {
         onView(withId(R.id.recyclerViewUser))
-            .perform(RecyclerViewActions.actionOnItemAtPosition<UserViewHolder>(listItemPosition,ViewActions.click()))
-
-        onView(withId(R.id.albumRecyclerView)).perform(RecyclerViewActions
-            .actionOnItemAtPosition<AlbumViewHolder>(listItemPosition,ViewActions.click())
+            .perform(
+                RecyclerViewActions.actionOnItemAtPosition<UserViewHolder>(
+                    listItemPosition,
+                    ViewActions.click()
+                )
             )
-
+        onView(withId(R.id.albumRecyclerView))
+            .perform(
+                RecyclerViewActions.actionOnItemAtPosition<AlbumViewHolder>(
+                    listItemPosition,
+                    ViewActions.click()
+                )
+            )
         IdlingResource.ResourceCallback {
             onView(withText(R.id.albumDetailTitle))
                 .check(ViewAssertions.matches(isDisplayed()))

@@ -26,7 +26,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-/**UI test cases for userinfo fragment**/
+
 class FragmentUserTest {
 
     @get: Rule
@@ -41,13 +41,11 @@ class FragmentUserTest {
         activityRule.launchActivity(intent)
     }
 
-    /**test app launch success**/
     @Test
     fun appLaunchSuccess() {
         ActivityScenario.launch(MainActivity::class.java)
     }
 
-    /**test userinfo fragment is displayed**/
     @Test
     fun userFragmentDisplaySuccess() {
         val fragmentUser = FragmentUser()
@@ -55,7 +53,6 @@ class FragmentUserTest {
             .add(R.id.base_fragment, fragmentUser).commit()
     }
 
-    /**test userinfo fragment progress bar displayed**/
     @Test
     fun progressBarDisplay() {
 
@@ -92,18 +89,28 @@ class FragmentUserTest {
         }
     }
 
-    /**test scroll functionality on user list**/
     @Test
-    fun testRecyclerViewScrollToPosition() {
+    fun onLaunchCheckProgressBarIsDisplayed() {
+        IdlingResource.ResourceCallback {
+            onView(withId(R.id.progressBarUser))
+                .check(matches(isDisplayed()))
+        }
+    }
+
+    @Test
+    fun testRecyclerViewFragmentUserTestScrollToPosition() {
         onView(withId(R.id.recyclerViewUser))
             .perform(RecyclerViewActions.scrollToPosition<UserViewHolder>(scrollToPosition))
     }
 
-    /**test click functionality on item from userinfo list**/
     @Test
-    fun testRecyclerviewOnClickItem() {
+    fun testRecyclerviewUserOnClickItem() {
         onView(withId(R.id.recyclerViewUser))
             .perform(actionOnItemAtPosition<UserViewHolder>(scrollToPosition, click()))
     }
 
+    @Test
+    fun recyclerViewFragmentUserIsDisplayed() {
+        onView(withId(R.id.recyclerViewUser)).check(matches(isDisplayed()))
+    }
 }

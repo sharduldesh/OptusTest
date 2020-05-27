@@ -14,7 +14,7 @@ import retrofit2.Response
 
 /**View model class for user info**/
 class UserViewModel(private val userRepo: UserInfoRepository) : ViewModel() {
-    private val usersList = MutableLiveData<Result<Response<List<UserInfoResponseModel>>>>()
+    private val usersList = MutableLiveData<Result<List<UserInfoResponseModel>>>()
 
     init {
         getUsersList()
@@ -25,7 +25,7 @@ class UserViewModel(private val userRepo: UserInfoRepository) : ViewModel() {
         viewModelScope.launch {
             usersList.postValue(Result.loading(null))
             try {
-                usersList.postValue(Result.success(userRepo.getUsersApi()))
+                usersList.postValue(Result.success(userRepo.getUsers()))
             } catch (exception: Exception) {
                 usersList.postValue(Result.error(FAILURE_MESSAGE, null))
                 exception.message ?: "$FAILURE_MESSAGE"
@@ -34,7 +34,7 @@ class UserViewModel(private val userRepo: UserInfoRepository) : ViewModel() {
     }
 
     /**function returns livedata of userinfo type **/
-    fun getUserList(): LiveData<Result<Response<List<UserInfoResponseModel>>>> {
+    fun getUserList(): LiveData<Result<List<UserInfoResponseModel>>> {
         return usersList
     }
 }

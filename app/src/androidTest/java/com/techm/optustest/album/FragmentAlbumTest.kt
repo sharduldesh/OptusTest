@@ -17,14 +17,13 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-/**UI test cases for album fragment**/
 class FragmentAlbumTest {
 
     @get: Rule
     val activityRule: ActivityTestRule<MainActivity> =
         ActivityTestRule(MainActivity::class.java, false, false)
 
-    private val scrollToPosition = 5
+    private val listItemPosition = 5
 
     @Before
     fun setUp() {
@@ -32,46 +31,52 @@ class FragmentAlbumTest {
         activityRule.launchActivity(intent)
     }
 
-
-    /**test album fragment is displayed**/
-    @Test
-    fun albumFragmentDisplaySuccess() {
-        onView(withId(R.id.recyclerViewUser))
-            .perform(RecyclerViewActions.actionOnItemAtPosition<UserViewHolder>(scrollToPosition,ViewActions.click()))
-
-        onView(withId(R.id.albumRecyclerView))
-            .check(matches(isDisplayed()))
-    }
-
-    /**test album fragment progress bar displayed**/
     @Test
     fun testFragmentAlbumProgressBarIsDisplayed() {
 
         onView(withId(R.id.recyclerViewUser))
-            .perform(RecyclerViewActions.actionOnItemAtPosition<UserViewHolder>(scrollToPosition, ViewActions.click()))
+            .perform(
+                RecyclerViewActions.actionOnItemAtPosition<UserViewHolder>(
+                    listItemPosition,
+                    ViewActions.click()
+                )
+            )
 
-        IdlingResource.ResourceCallback {onView(withId(R.id.progressBarUser)).check(matches(isDisplayed()))
+        IdlingResource.ResourceCallback {
+            onView(withId(R.id.progressBarUser))
+                .check(matches(isDisplayed()))
         }
     }
 
 
-    /**test scroll functionality on album list**/
     @Test
-    fun albumRecyclerViewScrollToPosition() {
+    fun testRecyclerViewFragmentAlbumTestScrollingToPosition() {
         onView(withId(R.id.recyclerViewUser))
-            .perform(RecyclerViewActions.actionOnItemAtPosition<UserViewHolder>(scrollToPosition,ViewActions.click()))
-
+            .perform(
+                RecyclerViewActions.actionOnItemAtPosition<UserViewHolder>(
+                    listItemPosition,
+                    ViewActions.click()
+                )
+            )
         onView(withId(R.id.albumRecyclerView))
-            .perform(RecyclerViewActions.scrollToPosition<UserViewHolder>(scrollToPosition))
+            .perform(RecyclerViewActions.scrollToPosition<UserViewHolder>(1))
     }
 
-    /**test click functionality on item from album list**/
     @Test
-    fun albumRecyclerviewOnClickItem() {
+    fun testRecyclerviewAlbumOnClickItem() {
         onView(withId(R.id.recyclerViewUser))
-            .perform(RecyclerViewActions.actionOnItemAtPosition<UserViewHolder>(scrollToPosition,ViewActions.click()))
-
+            .perform(
+                RecyclerViewActions.actionOnItemAtPosition<UserViewHolder>(
+                    listItemPosition,
+                    ViewActions.click()
+                )
+            )
         onView(withId(R.id.albumRecyclerView))
-            .perform(RecyclerViewActions.actionOnItemAtPosition<AlbumViewHolder>(scrollToPosition,ViewActions.click()))
+            .perform(
+                RecyclerViewActions.actionOnItemAtPosition<AlbumViewHolder>(
+                    0,
+                    ViewActions.click()
+                )
+            )
     }
 }

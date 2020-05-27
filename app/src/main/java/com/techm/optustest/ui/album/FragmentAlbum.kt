@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.techm.optustest.R
 import com.techm.optustest.data.model.AlbumResponseModel
 import com.techm.optustest.data.network.APIServiceImpl
+import com.techm.optustest.data.network.RetrofitBuilder
 import com.techm.optustest.data.repository.AlbumRepository
 import com.techm.optustest.databinding.FragmentAlbumBinding
 import com.techm.optustest.util.Constants.Companion.FAILURE_MESSAGE
@@ -30,6 +31,7 @@ class FragmentAlbum : Fragment(), AlbumAdapter.OnImageClickListener {
 
     private lateinit var albumViewModel: AlbumViewModel
     private lateinit var binding: FragmentAlbumBinding
+    private lateinit var albumFactory: AlbumViewModelFactory
     private var userID = 0
 
     /**get userid from bundle**/
@@ -54,17 +56,18 @@ class FragmentAlbum : Fragment(), AlbumAdapter.OnImageClickListener {
         super.onActivityCreated(savedInstanceState)
 
         binding.albumTitle.text = "Album ID: $userID"
+        albumFactory = AlbumViewModelFactory(APIServiceImpl(RetrofitBuilder.apiService))
         albumViewModel =
-            ViewModelProviders.of(this, AlbumViewModelFactory(AlbumRepository(APIServiceImpl())))
-                .get(AlbumViewModel::class.java)
+            ViewModelProviders.of(this@FragmentAlbum, albumFactory).get(AlbumViewModel::class.java)
 
         if (activity?.isConnection()!!) {
             apiCall()
-        }else {
+        } else {
             binding.albumRecyclerView.showSnackBar(NO_INTERNET_CONNECTION)
         }
 
     }
+
     /**observe user list fetched from server and  bind  recycler view to livedata**/
     private fun apiCall() {
 
@@ -83,8 +86,8 @@ class FragmentAlbum : Fragment(), AlbumAdapter.OnImageClickListener {
                         binding.albumProgressBar.visibility = View.GONE
                         result.data.let { album ->
                             binding.albumRecyclerView.setHasFixedSize(true)
-                            binding.albumRecyclerView.adapter = album?.body()?.let { data ->
-                                AlbumAdapter(data, this)
+                            binding.albumRecyclerView.adapter = album?.let { albumList ->
+                                AlbumAdapter(albumList, this, requireContext())
                             }
                         }
                     }
@@ -110,7 +113,7 @@ class FragmentAlbum : Fragment(), AlbumAdapter.OnImageClickListener {
             "url" to item?.url
         )
 
-        findNavController().navigate(R.id.action_fragmentAlbum_to_fragmentPhoto , bundle)
+        findNavController().navigate(R.id.action_fragmentAlbum_to_fragmentPhoto, bundle)
     }
 
 

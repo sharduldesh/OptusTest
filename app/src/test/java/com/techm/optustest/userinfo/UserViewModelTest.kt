@@ -2,12 +2,11 @@ package com.techm.optustest.userinfo
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import com.techm.optustest.TestCoroutineRule
 import com.techm.optustest.data.model.UserInfoResponseModel
-import com.techm.optustest.data.network.APIInterface
 import com.techm.optustest.data.repository.UserInfoRepository
 import com.techm.optustest.ui.userinfo.UserViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
@@ -15,67 +14,53 @@ import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.junit.MockitoJUnitRunner
-
-import com.techm.optustest.util.Constants.Companion.FAILURE_MESSAGE
-import com.techm.optustest.util.Result
-import org.mockito.Spy
-import org.techm.optus.CoroutineTestRule
-import retrofit2.Response
+import  com.techm.optustest.util.Result
+import  com.techm.optustest.util.Constants.Companion.FAILURE_MESSAGE
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
 class UserViewModelTest {
 
-   /* @get:Rule
-    val testInstantTaskExecutorRule: TestRule = InstantTaskExecutorRule()*/
+    @get:Rule
+    val testInstantTaskExecutorRule: TestRule = InstantTaskExecutorRule()
 
     @get:Rule
-    val coroutineTestRule = CoroutineTestRule()
+    val testCoroutineRule = TestCoroutineRule()
 
     @Mock
     private lateinit var userRepository: UserInfoRepository
 
-    @Spy
-    private lateinit var apiService: APIInterface
-
-    @Spy
-    private lateinit var userObserver: Observer<Result<Response<List<UserInfoResponseModel>>>>
-
     @Mock
-    private lateinit var userList: Response<List<UserInfoResponseModel>>
+    private lateinit var userObserver: Observer<Result<List<UserInfoResponseModel>>>
 
-    @Before
-    fun setUp() {
-        //todo
-    }
-
+    /**Test for testing api call success case**/
     @Test
-    fun testGivenUserResponseIsSuccess() {
-        userRepository = UserInfoRepository(apiService)
-        coroutineTestRule.runBlockingTest {
+    fun userResponseSuccess() {
+
+        testCoroutineRule.runBlockingTest {
             doReturn(emptyList<UserInfoResponseModel>())
-                .`when`(userRepository).getUsersApi()
+                .`when`(userRepository).getUsers()
 
             val userViewModel = UserViewModel(userRepository)
             userViewModel.getUserList().observeForever(userObserver)
-            verify(userRepository).getUsersApi()
-            verify(userObserver).onChanged(Result.success(userList))
+            verify(userRepository).getUsers()
+            verify(userObserver).onChanged(Result.success(emptyList()))
             userViewModel.getUserList().removeObserver(userObserver)
         }
     }
 
-
+    /**Test for testing api call error case**/
     @Test
-    fun testGivenUserResponseIsError() {
-        coroutineTestRule.runBlockingTest {
+    fun userResponseFail() {
+        testCoroutineRule.runBlockingTest {
             doThrow(RuntimeException(FAILURE_MESSAGE))
                 .`when`(userRepository)
-                .getUsersApi()
+                .getUsers()
 
             val userViewModel = UserViewModel(userRepository)
             userViewModel.getUserList().observeForever(userObserver)
-            verify(userRepository).getUsersApi()
-            verify(userObserver).onChanged(Result.error(RuntimeException(FAILURE_MESSAGE).toString() , null))
+            verify(userRepository).getUsers()
+            verify(userObserver).onChanged(Result.error(FAILURE_MESSAGE , null))
             userViewModel.getUserList().removeObserver(userObserver)
         }
     }

@@ -14,15 +14,17 @@ import com.techm.optustest.util.Result
 /**ViewModel class for album fragment**/
 class AlbumViewModel(private val albumRepo: AlbumRepository) : ViewModel() {
 
-    private val albumList = MutableLiveData<Result<Response<List<AlbumResponseModel>>>>()
+    private val albumList = MutableLiveData<Result<List<AlbumResponseModel>>>()
 
-    /**fetch album list**/
-    fun getAlbumList(id: Int): LiveData<Result<Response<List<AlbumResponseModel>>>> {
+    /**
+     * fetch list of albums
+     */
+    fun getAlbumList(id: Int): LiveData<Result<List<AlbumResponseModel>>>{
         return getList(id)
     }
 
     /**fetch album list form server with in background thread with the help of coroutine**/
-    private fun getList(id: Int): LiveData<Result<Response<List<AlbumResponseModel>>>> {
+    private fun getList(id: Int): LiveData<Result<List<AlbumResponseModel>>> {
 
         viewModelScope.launch {
             albumList.postValue(Result.loading(null))

@@ -1,5 +1,6 @@
 package com.techm.optustest.ui.album
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +11,8 @@ import com.techm.optustest.data.model.AlbumResponseModel
 /**adapter class for showing item in album fragment**/
 class AlbumAdapter(
     private var albumList: List<AlbumResponseModel>,
-    private var listener: OnImageClickListener
+    private var listener: OnImageClickListener,
+    private var context: Context
 ) : RecyclerView.Adapter<AlbumViewHolder>() {
 
     /**image click interface**/

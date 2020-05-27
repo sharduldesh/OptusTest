@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.techm.optustest.R
 import com.techm.optustest.data.model.UserInfoResponseModel
 import com.techm.optustest.data.network.APIServiceImpl
+import com.techm.optustest.data.network.RetrofitBuilder
 import com.techm.optustest.data.repository.UserInfoRepository
 import com.techm.optustest.databinding.FragmentUserBinding
 import com.techm.optustest.util.Constants.Companion.FAILURE_MESSAGE
@@ -24,10 +25,12 @@ import com.techm.optustest.util.showSnackBar
 /**
  * A simple [Fragment] subclass.
  */
+@Suppress("DEPRECATION")
 class FragmentUser : Fragment(), UserAdapter.OnItemClickListener {
 
     private lateinit var userViewModel: UserViewModel
     private lateinit var binding: FragmentUserBinding
+    private lateinit var userFactory: UserViewModelFactory
 
     /**bind fragment view**/
     override fun onCreateView(
@@ -46,8 +49,9 @@ class FragmentUser : Fragment(), UserAdapter.OnItemClickListener {
         val title: String = getString(R.string.user_info)
         binding.mToolbarUserTitle.text = title
 
+        userFactory = UserViewModelFactory(APIServiceImpl(RetrofitBuilder.apiService))
         userViewModel =
-            ViewModelProviders.of(this, UserViewModelFactory(UserInfoRepository(APIServiceImpl())))
+            ViewModelProviders.of(this@FragmentUser, userFactory)
                 .get(UserViewModel::class.java)
 
         if (activity?.isConnection()!!) {
@@ -71,9 +75,15 @@ class FragmentUser : Fragment(), UserAdapter.OnItemClickListener {
                         binding.progressBarUser.visibility = View.GONE
                         result.data.let { user ->
                             binding.recyclerViewUser.setHasFixedSize(true)
-                            binding.recyclerViewUser.adapter = user?.body()?.let { data ->
-                                UserAdapter(data, this)
-                            }
+                            binding.recyclerViewUser.adapter =
+                                user?.let { userList ->
+                                    UserAdapter(
+                                        userList,
+                                        this,
+                                        requireContext()
+                                    )
+
+                                }
                         }
                     }
                     Result.Status.ERROR -> {

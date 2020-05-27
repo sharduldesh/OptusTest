@@ -9,9 +9,9 @@ import retrofit2.http.Query
 interface APIInterface {
 
     @GET("users")
-    suspend fun getUsers(): Response<List<UserInfoResponseModel>>
+    suspend fun getUsers(): List<UserInfoResponseModel>
 
     @GET("photos")
-    suspend fun getAlbums(@Query("albumId") id: Int): Response<List<AlbumResponseModel>>
+    suspend fun getAlbums(@Query("albumId") id: Int): List<AlbumResponseModel>
 
 }
