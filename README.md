@@ -1,11 +1,13 @@
-Optus Demo 
+#Optus Demo# 
 
-Kotlin
+- Kotlin
 
-MVVM architecture
+- MVVM architecture
 
-Retrofit for networking
+- Retrofit for networking
 
-Picasso for image caching
+- Picasso for image caching
 
-Recyclerview and cardview
+- Recyclerview and cardview
+
+- Mockito, esspresso for unit testing
