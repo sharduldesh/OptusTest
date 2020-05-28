@@ -1,4 +1,4 @@
-package com.techm.optustest.album
+package com.techm.optustest.ui
 
 
 import android.view.View
@@ -11,7 +11,7 @@ import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import androidx.test.runner.AndroidJUnit4
 import com.techm.optustest.R
-import com.techm.optustest.ui.MainActivity
+import org.hamcrest.BaseMatcher
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.`is`
@@ -22,29 +22,23 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-/** @class Ui testing class to test album screen(screen 2). **/
-
 @LargeTest
 @RunWith(AndroidJUnit4::class)
-class FragmentAlbumTest {
+class FragmentAlbumTest  {
 
     @Rule
     @JvmField
     var mActivityTestRule = ActivityTestRule(MainActivity::class.java)
 
     /*
-     * test click on first item from userinfo fragment and loads album fragment
-     * checks if all the content of album list fragment is displayed
-     * */
+    * test click on first item from userinfo fragment and loads album fragment
+    * checks if all the content of album list fragment is displayed
+    * */
 
     @Test
     fun testAlbumListPageContentisDisplayed() {
-        try {
-            Thread.sleep(3000)
-        } catch (e: InterruptedException) {
-            e.printStackTrace()
-        }
-        val cardView = onView(
+        Thread.sleep(3000)
+        val userCardView = onView(
             allOf(
                 withId(R.id.userCardView),
                 childAtPosition(
@@ -60,13 +54,9 @@ class FragmentAlbumTest {
                 isDisplayed()
             )
         )
-        cardView.perform(click())
-        try {
-            Thread.sleep(3000)
-        } catch (e: InterruptedException) {
-            e.printStackTrace()
-        }
-        val textView = onView(
+        userCardView.perform(click())
+        Thread.sleep(5000)
+        val albumTitle = onView(
             allOf(
                 withId(R.id.albumTitle), withText("Album ID: 1"),
                 childAtPosition(
@@ -82,9 +72,25 @@ class FragmentAlbumTest {
                 isDisplayed()
             )
         )
-        textView.check(matches(withText("Album ID: 1")))
+        albumTitle.check(matches(withText("Album ID: 1")))
 
-        val textView2 = onView(
+        val imageViewAlbumPhoto = onView(
+            allOf(
+                firstView(withId(R.id.imageViewAlbumPhoto)),
+                childAtPosition(
+                    childAtPosition(
+                        withId(R.id.albumListCardView),
+                        0
+                    ),
+                    0
+                ),
+                isDisplayed()
+            )
+        )
+        imageViewAlbumPhoto.check(matches(isDisplayed()))
+
+
+        val textViewAlbumTitle = onView(
             allOf(
                 withId(R.id.textViewAlbumTitle),
                 withText("accusamus beatae ad facilis cum similique qui sunt"),
@@ -98,7 +104,7 @@ class FragmentAlbumTest {
                 isDisplayed()
             )
         )
-        textView2.check(matches(withText("accusamus beatae ad facilis cum similique qui sunt")))
+        textViewAlbumTitle.check(matches(withText("accusamus beatae ad facilis cum similique qui sunt")))
     }
 
     private fun childAtPosition(
@@ -115,6 +121,23 @@ class FragmentAlbumTest {
                 val parent = view.parent
                 return parent is ViewGroup && parentMatcher.matches(parent)
                         && view == parent.getChildAt(position)
+            }
+        }
+    }
+    /**matcher to match first imageview present in list**/
+    private fun <T> firstView(matcher: Matcher<T>): Matcher<T>? {
+        return object : BaseMatcher<T>() {
+            var isFirst = true
+            override fun matches(item: Any): Boolean {
+                if (isFirst && matcher.matches(item)) {
+                    isFirst = false
+                    return true
+                }
+                return false
+            }
+
+            override fun describeTo(description: Description) {
+                description.appendText("should return first matching item")
             }
         }
     }
