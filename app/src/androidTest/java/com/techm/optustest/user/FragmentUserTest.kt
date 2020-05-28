@@ -113,4 +113,30 @@ class FragmentUserTest {
     fun recyclerViewFragmentUserIsDisplayed() {
         onView(withId(R.id.recyclerViewUser)).check(matches(isDisplayed()))
     }
+    
+     @Test
+    fun performcardFirstItemclick() {
+        try {
+            Thread.sleep(3000)
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+
+        onView(withId(R.id.recyclerViewUser)).check(ViewAssertions.matches(isDisplayed()));
+
+        onView(withId(R.id.recyclerViewUser)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0,click()))
+
+    }
+    @Test
+    fun listScrollToEnd(){
+        try {
+            Thread.sleep(3000)
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+        val recyclerview:RecyclerView=mActivityTestRule.activity.findViewById<RecyclerView>(R.id.recyclerViewUser)
+        val count=recyclerview.adapter?.itemCount
+        onView(withId(R.id.recyclerViewUser)).perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(count!!.toInt()))
+
+    }
 }
