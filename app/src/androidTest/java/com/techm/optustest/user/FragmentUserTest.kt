@@ -72,6 +72,53 @@ class FragmentUserTest {
         textView.check(matches(withText("User Info")))
     }
 
+
+
+    /**test to check item click functionality**/
+    @Test
+    fun performcardFirstItemclick() {
+        try {
+            Thread.sleep(3000)
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+
+        onView(withId(R.id.recyclerViewUser)).check(ViewAssertions.matches(isDisplayed()));
+
+        onView(withId(R.id.recyclerViewUser)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                0,
+                click()
+            )
+        )
+
+    }
+
+
+    /**test for checking scrolling functionality**/
+    @Test
+    fun listScrollToLastAndFirst() {
+        try {
+            Thread.sleep(3000)
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+        val recyclerview: RecyclerView =
+            mActivityTestRule.activity.findViewById<RecyclerView>(R.id.recyclerViewUser)
+        val count = recyclerview.adapter?.itemCount
+        onView(withId(R.id.recyclerViewUser)).perform(
+            RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
+                count!!.toInt()
+            )
+        )
+
+        onView(withId(R.id.recyclerViewUser)).perform(
+            RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
+                0
+            )
+        )
+    }
+
     /**test to check all the content of userifo(ID,Name,Phone no.,Email) fragment is displayed**/
     @Test
     fun testUserinfoPageContentisDisplayed() {
@@ -157,41 +204,5 @@ class FragmentUserTest {
                         && view == parent.getChildAt(position)
             }
         }
-    }
-
-    @Test
-    fun performcardFirstItemclick() {
-        try {
-            Thread.sleep(3000)
-        } catch (e: InterruptedException) {
-            e.printStackTrace()
-        }
-
-        onView(withId(R.id.recyclerViewUser)).check(ViewAssertions.matches(isDisplayed()));
-
-        onView(withId(R.id.recyclerViewUser)).perform(
-            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                0,
-                click()
-            )
-        )
-
-    }
-
-    @Test
-    fun listScrollToEnd() {
-        try {
-            Thread.sleep(3000)
-        } catch (e: InterruptedException) {
-            e.printStackTrace()
-        }
-        val recyclerview: RecyclerView =
-            mActivityTestRule.activity.findViewById<RecyclerView>(R.id.recyclerViewUser)
-        val count = recyclerview.adapter?.itemCount
-        onView(withId(R.id.recyclerViewUser)).perform(
-            RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
-                count!!.toInt()
-            )
-        )
     }
 }
